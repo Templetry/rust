@@ -1,0 +1,29 @@
+schema_version: 1
+name: rust-cli
+description: Rust CLI — clap derive, lib + bin split, unit tests
+platform: cli
+framework: rust
+
+variables:
+  - key: project_name
+    label: Project name
+    type: string
+    pattern: "^[A-Za-z][A-Za-z0-9 ]*$"
+
+identity:
+  - from: "template_app"           # crate name in code (hyphens become underscores)
+    to: "{project_name.snake}"
+  - from: "template-app"           # package name, binary name
+    to: "{project_name.kebab}"
+  - from: "TemplateApp"            # docs
+    to: "{project_name.pascal}"
+
+features:
+  - key: github_actions
+    label: GitHub Actions CI
+    default: true
+    files: [".github/**"]
+
+verify:
+  image: rust:1
+  run: cargo build && cargo test

@@ -1,0 +1,33 @@
+schema_version: 1
+name: rust-axum-service
+description: Rust HTTP service — axum + tokio, health endpoint, handler tests
+platform: backend
+framework: axum
+
+variables:
+  - key: project_name
+    label: Project name
+    type: string
+    pattern: "^[A-Za-z][A-Za-z0-9 ]*$"
+
+identity:
+  - from: "template_app"           # crate name in code
+    to: "{project_name.snake}"
+  - from: "template-app"           # package name, binary, docker tag
+    to: "{project_name.kebab}"
+  - from: "TemplateApp"            # docs
+    to: "{project_name.pascal}"
+
+features:
+  - key: docker
+    label: Dockerfile (multi-stage, debian slim)
+    default: true
+    files: ["Dockerfile", ".dockerignore"]
+  - key: github_actions
+    label: GitHub Actions CI
+    default: true
+    files: [".github/**"]
+
+verify:
+  image: rust:1
+  run: cargo build && cargo test
