@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+  schedule:
+    # Weekly, so upstream drift surfaces here and not in a user project.
+    - cron: "0 6 * * 1"
 
 concurrency:
   group: verify-${{ github.ref }}
@@ -22,7 +26,7 @@ jobs:
       - name: Install templetry
         run: |
           curl -fsSL -o /usr/local/bin/templetry \
-            "https://github.com/Templetry/engine/releases/download/v1.4.0/templetry-linux-amd64"
+            "https://github.com/Templetry/engine/releases/download/v1.7.0/templetry-linux-amd64"
           chmod +x /usr/local/bin/templetry
       - name: Render
         run: |
