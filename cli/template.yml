@@ -1,8 +1,9 @@
 schema_version: 1
 name: rust-cli
 description: Rust CLI — clap derive, lib + bin split, unit tests
-platform: cli
-framework: rust
+kinds: [cli]
+languages: [rust]
+frameworks: [clap]
 
 variables:
   - key: project_name

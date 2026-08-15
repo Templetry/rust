@@ -1,8 +1,9 @@
 schema_version: 1
 name: rust-axum-service
 description: Rust HTTP service — axum + tokio, health endpoint, handler tests
-platform: backend
-framework: axum
+kinds: [backend]
+languages: [rust]
+frameworks: [axum, tokio]
 
 variables:
   - key: project_name
