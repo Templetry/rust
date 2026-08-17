@@ -20,6 +20,15 @@ identity:
     to: "{project_name.pascal}"
 
 features:
+  - key: environments
+    label: development / staging / production profiles (ADR-0018)
+    default: true
+    files:
+      - "src/config.rs"
+      - ".env.development"
+      - ".env.staging"
+      - ".env.production"
+
   - key: docker
     label: Dockerfile (multi-stage, debian slim)
     default: true
@@ -28,6 +37,11 @@ features:
     label: GitHub Actions CI
     default: true
     files: [".github/**"]
+
+presets:
+  - key: minimal
+    label: Single configuration
+    features: {environments: false}
 
 verify:
   image: rust:1

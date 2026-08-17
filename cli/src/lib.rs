@@ -1,5 +1,9 @@
 //! TemplateApp library: the logic the CLI is a shell over.
 
+// tpl:if environments
+pub mod config;
+// tpl:endif
+
 /// Builds the message the CLI prints.
 pub fn greeting(name: &str) -> String {
     let name = if name.is_empty() { "world" } else { name };

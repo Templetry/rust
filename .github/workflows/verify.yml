@@ -15,19 +15,23 @@ concurrency:
 
 jobs:
   form:
-    name: ${{ matrix.form }} (default)
+    name: ${{ matrix.form }} (${{ matrix.combo }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         form: [cli, axum-service]
+        combo: [default, minimal]
+        include:
+          - { combo: default, args: "" }
+          - { combo: minimal, args: "--preset minimal" }
     steps:
       - uses: actions/checkout@v4
       - uses: Templetry/.github/actions/setup-templetry@main
       - name: Render
         run: |
           templetry render --template "./${{ matrix.form }}" --out "$RUNNER_TEMP/out" \
-            --set "project_name=Verify App"
+            --set "project_name=Verify App" ${{ matrix.args }}
       - uses: dtolnay/rust-toolchain@stable
       - name: Build and test rendered output
         working-directory: ${{ runner.temp }}/out
